@@ -1,6 +1,5 @@
 package com.maiia.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maiia.api.model.Text;
-import com.maiia.api.repository.TextRepository;
+import com.maiia.api.service.TextService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -20,13 +19,12 @@ import com.maiia.api.repository.TextRepository;
 public class TextController {
 
 	@Autowired
-	private TextRepository textRepository;
+	private TextService service;
 
 	@GetMapping("/texts")
 	public ResponseEntity<List<Text>> getAllTexts() {
 		try {
-			List<Text> texts = new ArrayList<Text>();
-			textRepository.findAll().forEach(texts::add);
+			List<Text> texts = service.getAll();
 			if (texts.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}

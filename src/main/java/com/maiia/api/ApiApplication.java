@@ -1,6 +1,5 @@
 package com.maiia.api;
 
-import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,15 +9,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import com.maiia.api.model.Text;
-import com.maiia.api.model.TextList;
-import com.maiia.api.repository.TextRepository;
+import com.maiia.api.service.TextService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
+@Slf4j
 public class ApiApplication {
 
 	@Autowired
-	private TextRepository textRepository;
-
+	private TextService service;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
 	}
@@ -32,11 +33,11 @@ public class ApiApplication {
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
 			String url = "https://jsonplaceholder.typicode.com/posts";
-			TextList list = new TextList();
-			list.setTexts(Arrays.asList(restTemplate.getForEntity(url, Text[].class).getBody()));
-			list.firstFifty();
-			list.sortByTitle();
-			textRepository.saveAll(list.getTexts());
+			try {
+				service.processData(restTemplate.getForEntity(url, Text[].class).getBody());
+			} catch (Exception e) {
+				log.error("Error when getting data: " + e.getMessage());
+			}
 		};
 	}
 }
