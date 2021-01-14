@@ -19,7 +19,7 @@ git clone https://github.com/kcyw23/maiia.git
 
 ```bash
 mvn clean package
-java -jar target/spring-boot-mongodb-rest-api-0.0.1-SNAPSHOT.jar
+java -jar target/api-0.0.1-SNAPSHOT.jar
 ```
 
 Alternatively, you can run the app without packaging it using -
