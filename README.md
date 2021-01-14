@@ -7,6 +7,8 @@
 * Eclipse
 * Java1.8
 
+To install MongoDB: https://docs.mongodb.com/manual/installation/
+
 ## Step to install
 
 1. **Clone the application**
@@ -29,3 +31,4 @@ mvn spring-boot:run
 ```
 
 The backend server will start at <http://localhost:8080>.
+
